@@ -1,54 +1,52 @@
-# Simulateur Les Points Vélo — V3 (prototype à valider)
+# Simulateur Les Points Vélo — Version 4
 
-## Déployer
+Site statique mobile-first : ouvrir `index.html` ou déposer dans GitHub Pages.
 
-1. Décompresser l'archive.
-2. Créer un dépôt public GitHub (ex. `simulateur-les-points-velo`).
-3. Ajouter `index.html` à la racine du dépôt.
-4. Dans **Settings → Pages**, choisir **Deploy from a branch**, **main**, dossier **/(root)**.
-5. Le site sera accessible sous `https://<identifiant>.github.io/<depot>/`.
+## Nouveauté : prix complets
 
-Aucune dépendance, aucun build, pas de serveur, aucune collecte de données. La prise de contact ouvre le logiciel e-mail du visiteur.
+La V4 conserve le parcours guidé V3, la recommandation qualitative, le contact commercial `mailto:` et les statistiques nationales descriptives. Elle remplace les prix de main-d’œuvre seule par une base de **main-d’œuvre + pièces standard**. Les scénarios ne sont pas des probabilités annuelles de panne. La base est datée du **20 novembre 2026**. Toutes les valeurs sont centralisées dans l'objet `CONFIG` du script à la fin de `index.html`.
 
-## Méthodologie
+| Intervention | MO classique / VAE | Pièce classique / VAE | Total classique / VAE | Référence pièce |
+|---|---:|---:|---:|---|
+| Révision Sérénité | 72 / 102 | 0 / 0 | 72 / 102 | Forfait sans pièces ajoutées |
+| Chambre à air, roue traditionnelle | 12 / 12 | 5,99 / 5,99 | 17,99 / 17,99 | Decathlon 700×35/45 |
+| Chambre à air, roue spéciale/motorisée | 23 / 23 | 5,99 / 5,99 | 28,99 / 28,99 | Decathlon 700×35/45 (hypothèse compatibilité) |
+| Plaquettes disque, paire | 15 / 15 | 7,99 / 7,99 | 22,99 / 22,99 | Shimano / compatibles entrée de gamme |
+| Patins V-Brake, paire | 15 / 15 | 3,49 / 3,49 | 18,49 / 18,49 | Decathlon V-Brake 100 |
+| Chaîne | 16 / 16 | 9,99 / 18,32 | 25,99 / 34,32 | Decathlon 3–8 vitesses / VAE 10 vitesses |
+| Pneu ville, 1 roue | 12 / 12 | 19,99 / 19,99 | 31,99 / 31,99 | Vittoria Randonneur 700×35 |
+| Câble et gaine frein, externe | 15 / 15 | 6,99 / 6,99 | 21,99 / 21,99 | Kit standard |
+| Réglage frein | 12 / 12 | 0 / 0 | 12 / 12 | Sans pièce |
 
-Ce prototype **n'annonce aucune probabilité de crevaison ou d'accident individuel** car les bases consultées ne contiennent pas le kilométrage des vélos suivi avec les événements mécaniques. Il comporte :
+Ces références sont des **prix publics observés**, pas une moyenne représentative de la France et pas les prix pratiqués par Les Points Vélo. La compatibilité, les pièces de qualité différente, les opérations et les frais réels peuvent varier. Les pièces standard de sécurité sont retenues neuves.
 
-- Kilométrage annuel estimé : distance par jour × jours/semaine × semaines/an, ou valeur saisie.
-- Statistiques de population : 22 % de recours à un professionnel (ADEME, estimation 2024) ; 47 € / intervention (Ecologic, prix de référence 2022 repris ADEME 2026) ; 13 971 réparations réseau Roulez Jeunesse 2025. Ces données **ne sont pas converties en taux individuel de panne**.
-- Scénarios d'interventions : « calme », « avec révision », « chargée » ; **hypothèses de travail**, éditables par quantités 0–20.
-- Tarifs d'intervention : main-d'œuvre seule TTC Cycle Service Lyon, 6 avril 2026. Pièces supplémentaires : saisie libre, 0 par défaut.
-- Coût du scénario = (somme des quantités × tarifs de main-d'œuvre + coût de pièces déclaré) × mois/12.
-- Coût abonnement = prix base (10 € classique, 15 € électrique) × (1,25 si 6 mois, sinon 1) × durée en mois.
-- Comparaison = coût du scénario – coût de l'abonnement. Les préférences et la volonté de payer pour la tranquillité ne sont **jamais monétisées comme une économie**.
-- Scénarios de résultats qualitatifs fondés sur proximité, usage, préférences et coût simulé. Aucune note /100.
-- Accidents ONISR : 235 décès cyclistes en France métropolitaine en 2025, dont 96 sans tiers. **Ne démontre ni causalité mécanique, ni réduction des accidents par l'abonnement**.
-- VéloScore : informations issues de la plaquette LPV pour entreprises. Extension aux particuliers **non confirmée**.
+## Double comptage de main-d'œuvre
 
-## Sources
+Cycle Service Lyon indique que les révisions Sérénité comprennent la pose de **jusqu'à deux remplacements éligibles** (pneus, chambres, plaquettes, chaînes, câbles externes, etc.) sans fournir les pièces. Pour éviter de surestimer le coût à l'unité, le moteur déduit de la MO facturée jusqu'à deux poses éligibles par révision en attribuant d'abord les crédits aux poses les plus coûteuses. Un réglage de frein inclus dans une révision est également déduit une fois par révision. **Hypothèse simplificatrice** : les travaux sont regroupés lors de la même visite ; en pratique il peut y avoir des visites séparées, et donc des coûts supérieurs. Le forfait d'un autre atelier peut être différent.
 
-- [ADEME — Impact socio-économique des usages du vélo en France (2026)](https://librairie.ademe.fr/mobilite-et-transports/9313-11108-impact-socio-economique-des-usages-du-velo-en-france.html)
-- [Ecologic — Étude sur la réparation des cycles (2023)](https://www.ecologic-france.com/ressources/etude-sur-la-reparation-des-cycles)
-- [Roulez Jeunesse — Bilan des pannes vélo 2025](https://blog.roulezjeunesse.com/bilan-pannes-velo-2025/)
-- [Cycle Service Lyon — Tarifs appliqués depuis 6 avril 2026](https://cycleservice.fr/tarifs)
-- [ONISR — Bilan définitif 2025](https://www.onisr.securite-routiere.gouv.fr/etat-de-linsecurite-routiere/bilans-annuels-de-la-securite-routiere/bilan-2025-de-la-securite-routiere)
-- Documents startup 2026 : Mission étudiants, Réponses aux étudiants, VéloScore.
-- Documents groupe : Benchmarking, Rapport, Rapport partie rentabilité.
+Coût annuel d'un panier : somme(qté × (MO + pièce)) moins les crédits de MO éligible. Le coût sur 6 mois est une proratisation des quantités **annuelles** ; approximation explicite car les pannes sont irrégulières. Les autres frais optionnels ne sont pas ajoutés aux pièces déjà comptabilisées.
 
-## Paramètres à modifier
+## Sources de prix (consultées le 20/11/2026)
 
-Dans `index.html`, chercher `const CONFIG`. S'y trouvent : tarifs de souscription, taux de population purement descriptifs, prix d'intervention, scénarios et adresse e-mail.
+- Main-d'œuvre et forfaits : https://cycleservice.fr/tarifs et https://cycleservice.fr/reparation-velo-lyon/revisions-velo-entretien (tarifs depuis 06/04/2026).
+- Chambre : https://www.decathlon.fr/tous-les-sports/velo-cyclisme/chambre-a-air-velo (5,99 €).
+- Patins : https://www.decathlon.fr/p/patins-frein-v-brake-universel-100/335/m3256737 (3,49 €).
+- Plaquettes : https://www.decathlon.fr/vc/plaquettes-de-frein-shimano (7,99 €).
+- Chaîne classique : https://www.decathlon.fr/p/chaine-velo-3-a-8-vitesses/331640/m8640930 (9,99 €).
+- Chaîne VAE : https://www.decathlon.fr/tous-les-sports/velo-cyclisme/chaines-velo (référence 10 vitesses à 18,32 €).
+- Pneu ville : https://www.decathlon.fr/p/pneu-vittoria-randonneur-700x35-37-622/X8089011/m8089011 (19,99 €).
+- Kit câble + gaine : https://www.decathlon.fr/p/cable-et-gaine-de-frein/200529/m8527490 (6,99 €).
 
-## Hypothèses et validation nécessaire avec LPV
+## Sources de contexte
 
-1. Tarifs complets à l'unité, pièces et main-d'œuvre, avec règles de regroupement des travaux (éviter double comptage d'une révision).
-2. Périmètre exact des réparations couvertes, exclusions, composants VAE, et conditions du délai de 48 h.
-3. Conditions contractuelles précises du 6 mois / 12 mois, résiliation et préavis.
-4. Statistiques de panne **par km** : il faut une cohorte avec kilomètres parcourus, type de vélo, durée d'observation et nombre de réparations. Sans cela, pas de modèle Poisson calibré.
-5. Utilisation du VéloScore pour particuliers et carte de parrainage / diagnostic découverte.
-6. Seuil qualitatif de recommandations, validation par enquête et A/B test avec des cyclistes.
-7. Limites de l'offre, notamment vélo cargo, modèles rares, batterie/moteur électrique.
+Les autres statistiques descriptives ADEME/Ecologic/ONISR et les règles LPV sont reprises de la V3. Ne jamais les interpréter comme une probabilité individuelle de crevaison ou comme des accidents évités grâce à l'abonnement.
 
-## Vérification technique
+## Tests rapides de cohérence
 
-Fichier autonome utilisable localement ou GitHub Pages. Vérifier sur navigateur mobile réel avant publication.
+- Une chambre à air traditionnelle, sans révision : 17,99 € ; avec révision, 72 + 5,99 = 77,99 € (pose déjà incluse).
+- Révision classique + 2 chambres + 1 paire de plaquettes : 72 + 2×5,99 + (15 + 7,99) = 106,97 € selon la règle des deux poses comprises.
+- Une année sans intervention : coût à l'unité 0 €, abonnement classique 120 € / VAE 180 €.
+
+## Hypothèses à valider avec Les Points Vélo
+
+Compatibilité des pièces standard selon vélos ; modèles éligibles ; périmètre des composants VAE ; regroupement des travaux dans une révision ; montants de détail exacts à Lyon ; carte de parrainage et VéloScore particuliers.
