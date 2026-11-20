@@ -1,28 +1,47 @@
-# Simulateur Les Points Vélo
+# Les Points Vélo — Simulateur V2
 
-Site statique mobile-first en HTML/CSS/JavaScript, sans dépendance ni collecte de données.
+Site statique, mobile-first, sans bibliothèque et sans collecte serveur. Ouvrir `index.html` dans un navigateur.
 
-## Publier sur GitHub Pages
-1. Créer un dépôt GitHub public (ou privé compatible avec votre offre GitHub).
-2. Déposer `index.html` à la racine du dépôt.
-3. Ouvrir `Settings` > `Pages` > `Build and deployment`.
-4. Choisir `Deploy from a branch`, branche `main`, dossier `/ (root)`, puis sauvegarder.
-5. Visiter l’URL GitHub Pages affichée par GitHub. Le formulaire d'e-mail utilise `mailto:`.
+## Mise en ligne GitHub Pages
+1. Créer un dépôt public GitHub.
+2. Ajouter `index.html` à la racine de la branche `main`.
+3. `Settings` → `Pages` → `Deploy from a branch` → `main` / `(root)` → `Save`.
+4. Partager l'adresse GitHub Pages générée.
 
-## Logique
-- Prix 12 mois : classique 10 €/mois ; électrique 15 €/mois.
-- Prix 6 mois : +25 % mensuel ; comparaison sur 6 mois.
-- Mode historique : budget annuel saisi, divisé par deux pour 6 mois.
-- Sans historique : 60 €/an du business plan Les Points Vélo, **non vérifié comme moyenne nationale**.
-- Mode scénario : 1 intervention de chaque type sélectionné sur un an, sans prédiction de panne. Tarifs main-d’œuvre uniquement.
-- Le seuil affiché en mois est le coût **total engagé** divisé par les dépenses mensuelles estimées à l’unité. Il n'est pas un gain garanti.
-- En cas de faible budget de réparation, le simulateur dit explicitement que l'abonnement est moins avantageux financièrement.
+## Choix métier
+- Aucun score multicritère numérique. Recommandation qualitative à règles transparentes.
+- Question sur la valeur personnelle de la tranquillité, **sans** l'ajouter aux économies financières.
+- Questionnaire guidé en cinq étapes. Comparaison des coûts explicite.
+- Prix : classique 10 €/mois, VAE 15 €/mois, formule 6 mois +25 %, formule 12 mois au tarif normal.
+- Deux sources de dépenses : saisie ou interventions cochées au tarif indicatif de main-d'œuvre. Si saisie vide : référence 60 €/an (hypothèse startup, **pas moyenne française**).
+- Trois scénarios : 0 réparation, référence, référence + réparations additionnelles choisies.
+- Les scénarios ne prédisent aucune panne ni probabilité.
+- Engagement nominatif pour un seul vélo, pas d'offre famille, réparation et choix des pièces par le mécanicien, sécurité neuve, accessoires neufs payants.
+- CTA `mailto:` pour prise de contact, sans souscription automatique.
 
-## Sources
-- Les Points Vélo, Mission étudiants IAE et Réponses aux étudiants (2026).
-- Cycle Service Lyon, https://cycleservice.fr/tarifs (main-d’œuvre TTC au 6 avril 2026).
-- ONISR, bilan définitif 2025, https://www.onisr.securite-routiere.gouv.fr/etat-de-linsecurite-routiere/bilans-annuels-de-la-securite-routiere/bilan-2025-de-la-securite-routiere
-- VéloScore Les Points Vélo, document transmis (2026).
+## Formules
+- `abonnement = prixMensuel × (1,25 si 6 mois sinon 1) × durée`
+- `dépensesÀLUnité = dépensesAnnuelles × durée / 12`
+- `économiePotentielle = dépensesÀLUnité − abonnement`
+- `seuilMois = abonnement ÷ (dépensesAnnuelles / 12)` lorsque dépenses > 0. Il s'agit du délai théorique d'équivalence avec le *coût total engagé* sous une répartition linéaire des dépenses, non d'une date de rentabilité d'une mensualité.
+- `annéePlusChargée = référence + somme(interventions supplémentaires explicitement cochées) × durée / 12`.
 
-## À valider avant publication commerciale
-Éligibilité détaillée des modèles, prestations couvertes (notamment composants électriques), modalités de résiliation/préavis, possibilité d'étendre VéloScore aux particuliers, format du parrainage, pertinence des hypothèses et des prix de pièces, usage des couleurs et identité de marque, URL de souscription.
+## Sources et hypothèses
+| Valeur | Source, année | Statut |
+|---|---|---|
+| Prix et conditions des formules | Les Points Vélo, documents remis à IAE Lyon, 2026 | Déclarations de la startup ; termes contractuels à confirmer |
+| 60 €/an en dépannage ponctuel | Business plan Les Points Vélo, 2026 | Hypothèse modifiable, pas moyenne française |
+| Grille de main-d'œuvre | Cycle Service Lyon, tarifs 2026, https://cycleservice.fr/tarifs | Référence locale ; montants et disponibilité à revalider |
+| VéloScore en 20 points, note A à E | Plaquette Les Points Vélo, 2026 | Documenté pour entreprises ; extension particuliers à valider |
+| Valeur personnelle de tranquillité | Déclaration de l'utilisateur | Préférence subjective, ne pas monétiser en gain |
+| Conseil qualitatif suivant fréquence et priorités | Règles de conception du prototype, 2026 | Hypothèses modifiables ; non prédictives |
+
+## À valider avec la startup avant déploiement
+1. Tarifs complets de réparation pièces incluses et mise à jour du comparateur.
+2. Portée exacte des réparations couvertes, exclusions de modèles et équipements VAE.
+3. Préavis, modalités de résiliation, garantie opérationnelle de 48 heures.
+4. Disponibilité du VéloScore pour les particuliers et faisabilité d'une carte de parrainage.
+5. Test utilisateur comparant compréhension du contrat, conversion et satisfaction.
+
+## Personnalisation
+La constante `CONFIG` se trouve au début du JavaScript, vers la fin de `index.html`. Modifier les hypothèses de simulation sans changer les tarifs décidés par l'entreprise.
