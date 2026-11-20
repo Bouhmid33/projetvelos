@@ -14,17 +14,20 @@ Site statique, mobile-first, sans bibliothèque et sans collecte serveur. Ouvrir
 - Questionnaire guidé en cinq étapes. Comparaison des coûts explicite.
 - Prix : classique 10 €/mois, VAE 15 €/mois, formule 6 mois +25 %, formule 12 mois au tarif normal.
 - Deux sources de dépenses : saisie ou interventions cochées au tarif indicatif de main-d'œuvre. Si saisie vide : référence 60 €/an (hypothèse startup, **pas moyenne française**).
-- Trois scénarios : 0 réparation, référence, référence + réparations additionnelles choisies.
-- Les scénarios ne prédisent aucune panne ni probabilité.
+- Trois scénarios : 0 réparation, référence, référence + réparations additionnelles avec quantités saisies.
+- Les quantités représentent des hypothèses choisies par le visiteur, non des prévisions. Les scénarios ne prédisent aucune panne ni probabilité.
 - Engagement nominatif pour un seul vélo, pas d'offre famille, réparation et choix des pièces par le mécanicien, sécurité neuve, accessoires neufs payants.
 - CTA `mailto:` pour prise de contact, sans souscription automatique.
+
+## Réparations et quantités
+Chaque catégorie possède un compteur avec boutons − / + et une saisie directe entre 0 et 20 occurrences annuelles (modifiable dans `CONFIG.maxRepairOccurrences`). Le coût annuel est `Σ(quantité annuelle × tarif unitaire de main-d’œuvre)` ; le comparatif prorate ensuite sur 6 ou 12 mois. Dans le scénario « année plus chargée », les quantités supplémentaires s’ajoutent exclusivement au scénario chargé. Les pièces ne sont pas chiffrées.
 
 ## Formules
 - `abonnement = prixMensuel × (1,25 si 6 mois sinon 1) × durée`
 - `dépensesÀLUnité = dépensesAnnuelles × durée / 12`
 - `économiePotentielle = dépensesÀLUnité − abonnement`
 - `seuilMois = abonnement ÷ (dépensesAnnuelles / 12)` lorsque dépenses > 0. Il s'agit du délai théorique d'équivalence avec le *coût total engagé* sous une répartition linéaire des dépenses, non d'une date de rentabilité d'une mensualité.
-- `annéePlusChargée = référence + somme(interventions supplémentaires explicitement cochées) × durée / 12`.
+- `annéePlusChargée = référence + somme(quantité × prix unitaire de main-d’œuvre des interventions supplémentaires) × durée / 12`.
 
 ## Sources et hypothèses
 | Valeur | Source, année | Statut |
